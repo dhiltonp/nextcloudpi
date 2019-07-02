@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     sudo su
     set -e
     BRANCH=master
-    #BRANCH=devel  # uncomment to install devel
+    BRANCH=devel  # uncomment to install devel
     apt-get update
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git
 
@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
     cd /tmp/nextcloudpi
 
     # uncomment to install devel
-    #sed -i 's|^BRANCH=master|BRANCH=devel|' install.sh ncp.sh
+    sed -i 's|^BRANCH=master|BRANCH=devel|' install.sh ncp.sh
 
     bash install.sh
 

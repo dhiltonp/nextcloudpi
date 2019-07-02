@@ -10,7 +10,7 @@ SHELL ["/bin/bash", "-c"]
 
 ENV DOCKERBUILD 1
 
-COPY etc/ncp-config.json etc/library.sh lamp.sh /usr/local/etc/
+COPY etc/ncp.cfg etc/library.sh lamp.sh /usr/local/etc/
 
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
 

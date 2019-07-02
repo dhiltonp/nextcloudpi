@@ -31,17 +31,18 @@ apt-get update
 apt-get install --no-install-recommends -y wget ca-certificates sudo
 
 pushd "$TMPDIR"
-wget -O- --content-disposition https://github.com/nextcloud/nextcloudpi/archive/"$BRANCH"/latest.tar.gz \
+wget -qO- --content-disposition https://github.com/nextcloud/nextcloudpi/archive/"$BRANCH"/latest.tar.gz \
   | tar -xz \
   || exit 1
 cd - && cd "$TMPDIR"/nextcloudpi-"$BRANCH"
 
 # install NCP
-echo -e "\nInstalling NextCloudPi"
+echo -e "\nInstalling NextCloudPix"
 source etc/library.sh
 
 # check_distro
-CFG=etc/ncp-config.json check_distro || {
+CFG=etc/ncp.cfg
+check_distro "$CFG" || {
   echo "distro not supported";
   exit 1;
 }

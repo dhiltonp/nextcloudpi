@@ -60,9 +60,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
     # install everything
     cd /tmp/ncp-build || exit 1
-    source etc/library.sh
     mkdir -p /usr/local/etc/ncp-config.d
     cp etc/ncp-config.d/nc-nextcloud.cfg /usr/local/etc/ncp-config.d/
+    cp etc/ncp.cfg /usr/local/etc/
+    source etc/library.sh
     install_app    lamp.sh
     install_app    bin/ncp/CONFIG/nc-nextcloud.sh
     run_app_unsafe bin/ncp/CONFIG/nc-nextcloud.sh

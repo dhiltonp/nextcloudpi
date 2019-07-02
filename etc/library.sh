@@ -8,7 +8,7 @@
 # More at ownyourbits.com
 #
 
-CFG=/usr/local/etc/ncp-config.json
+CFG=/usr/local/etc/ncp.cfg
 CFGDIR=/usr/local/etc/ncp-config.d
 BINDIR=/usr/local/bin/ncp
 BINDIR=/usr/local/bin/ncp
@@ -265,9 +265,10 @@ function is_more_recent_than()
 
 function check_distro()
 {
-  local len="$(jq  '.release_issue | length' < "$CFG")"
+  local cfg="$1"
+  local len="$(jq  '.release_issue | length' < "$cfg")"
   for i in $(seq 1 $len); do
-    local supported=$(jq -r .release_issue[$i] < "$CFG")
+    local supported=$(jq -r .release_issue[$i] < "$cfg")
     grep -q "$supported" /etc/issue && return 0
   done
   return 1
