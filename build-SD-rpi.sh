@@ -86,7 +86,7 @@ EOFCHROOT
 clean_chroot_raspbian
 
 ## pack
- 
+
 TAR=output/"$( basename "$IMG" .img ).tar.bz2"
 pack_image "$IMG" "$TAR"
 

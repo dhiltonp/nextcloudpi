@@ -8,8 +8,14 @@
 # More at ownyourbits.com
 #
 
+CFG=/usr/local/etc/ncp-config.json
 CFGDIR=/usr/local/etc/ncp-config.d
 BINDIR=/usr/local/bin/ncp
+BINDIR=/usr/local/bin/ncp
+
+NCVER=$(  jq -r .nextcloud_version < "$CFG")
+PHPVER=$( jq -r .php_version       < "$CFG")
+RELEASE=$(jq -r .release           < "$CFG")
 
 function configure_app()
 {
@@ -255,6 +261,16 @@ function is_more_recent_than()
   fi
 
   return 0
+}
+
+function check_distro()
+{
+  local len="$(jq  '.release_issue | length' < "$CFG")"
+  for i in $(seq 1 $len); do
+    local supported=$(jq -r .release_issue[$i] < "$CFG")
+    grep -q "$supported" /etc/issue && return 0
+  done
+  return 1
 }
 
 # License

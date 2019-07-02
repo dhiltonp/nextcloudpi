@@ -5,7 +5,7 @@
 # Copyleft 2017 by Ignacio Nunez Hernanz <nacho _a_t_ ownyourbits _d_o_t_ com>
 # GPL licensed (see end of file) * Use at your own risk!
 #
-# Usage: ./install.sh 
+# Usage: ./install.sh
 #
 # more details at https://ownyourbits.com
 
@@ -20,12 +20,6 @@ trap "rm -rf \"${TMPDIR}\" ; exit 0" 0 1 2 3 15
 [[ ${EUID} -ne 0 ]] && {
   printf "Must be run as root. Try 'sudo $0'\n"
   exit 1
-}
-
-# check_distro 
-grep -q -e "Debian GNU/Linux 9" -e "Raspbian GNU/Linux 9" /etc/issue || {
-  echo "distro not supported"; 
-  exit 1; 
 }
 
 # check installed software
@@ -46,6 +40,13 @@ cd - && cd "$TMPDIR"/nextcloudpi-"$BRANCH"
 echo -e "\nInstalling NextCloudPi"
 source etc/library.sh
 
+# check_distro
+CFG=etc/ncp-config.json check_distro || {
+  echo "distro not supported";
+  exit 1;
+}
+
+
 mkdir -p /usr/local/etc/ncp-config.d/
 cp etc/ncp-config.d/nc-nextcloud.cfg /usr/local/etc/ncp-config.d/
 
@@ -60,7 +61,7 @@ bash /usr/local/bin/ncp-provisioning.sh
 popd
 
 IFACE="$( ip r | grep "default via" | awk '{ print $5 }' | head -1 )"
-IP="$( ip a show dev "$IFACE" | grep global | grep -oP '\d{1,3}(.\d{1,3}){3}' | head -1 )" 
+IP="$( ip a show dev "$IFACE" | grep global | grep -oP '\d{1,3}(.\d{1,3}){3}' | head -1 )"
 
 echo "Done.
 
